@@ -1,0 +1,53 @@
+---
+
+# project information
+project_name: adguardhome-sync
+project_url: "https://github.com/bakito/adguardhome-sync/"
+project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/adguardhomesync-icon.png"
+project_blurb: |
+  [{{ project_name|capitalize }}]({{ project_url }}) is a tool to synchronize AdGuardHome config to replica instances.
+
+project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+
+# supported architectures
+available_architectures:
+  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
+  - { arch: "{{ arch_armhf }}", tag: "arm32v7-latest"}
+
+# development version
+development_versions: true
+development_versions_items:
+  - { tag: "latest", desc: "Stable releases from GitHub" }
+
+# container parameters
+common_param_env_vars_enabled: true
+param_container_name: "{{ project_name }}"
+
+param_usage_include_env: true
+param_env_vars:
+  - { env_var: "TZ", env_value: "America/New_York", desc: "Specify a timezone to use EG America/New_York"}
+
+param_usage_include_ports: true
+param_ports:
+  - { external_port: "8080", internal_port: "8080", port_desc: "Port for AdGuardHome Sync's web API." }
+
+param_usage_include_vols: true
+param_volumes:
+  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
+
+# optional parameters
+opt_param_usage_include_env: true
+opt_param_env_vars:
+  - { env_var: "CONFIGFILE", env_value: "/config/adguardhome-sync.yaml", desc: "Set a custom config file."}
+
+opt_param_usage_include_vols: false
+
+# application setup block
+app_setup_block_enabled: true
+app_setup_block: |
+  Edit the adguardhome-sync.yaml with your AdGuardHome instance details, for more information check out [AdGuardHome Sync](https://github.com/bakito/adguardhome-sync/).
+
+# changelog
+changelogs:
+  - { date: "08.04.21:", desc: "Initial Release." }

@@ -1,0 +1,29 @@
+---
+
+# jenkins variables
+project_name: docker-adguardhome-sync
+external_type: github_stable
+release_type: stable
+release_tag: latest
+ls_branch: main
+repo_vars:
+  - EXT_GIT_BRANCH = 'main'
+  - EXT_USER = 'bakito'
+  - EXT_REPO = 'adguardhome-sync'
+  - CONTAINER_NAME = 'adguardhome-sync'
+  - BUILD_VERSION_ARG = 'ADGUARDHOMESYNC_RELEASE'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-adguardhome-sync'
+  - DOCKERHUB_IMAGE = 'linuxserver/adguardhome-sync'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/adguardhome-sync'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/adguardhome-sync'
+  - DIST_IMAGE = 'alpine'
+  - MULTIARCH='true'
+  - CI='true'
+  - CI_WEB='true'
+  - CI_PORT='8080'
+  - CI_SSL='false'
+  - CI_DELAY='120'
+  - CI_DOCKERENV='TZ=US/Pacific'
+  - CI_AUTH='user:password'
+  - CI_WEBPATH=''
