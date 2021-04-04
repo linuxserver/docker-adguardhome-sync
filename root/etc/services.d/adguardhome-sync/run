@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bash
+
+if [ -z "$CONFIGFILE" ]; then
+    exec \
+        s6-setuidgid abc /app/adguardhome-sync/adguardhome-sync run --config /config/adguardhome-sync.yaml;
+else
+    exec \
+        s6-setuidgid abc /app/adguardhome-sync/adguardhome-sync run --config "$CONFIGFILE";
+fi
