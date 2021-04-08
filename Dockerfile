@@ -7,24 +7,22 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 LABEL maintainer="TheSpad"
 
 ENV \
-  HOME=/app \
-  GO111MODULE=on \
-  GOOS=linux
+  HOME=/config
 
 RUN \
   apk add --update --no-cache curl && \
   mkdir -p /app/adguardhome-sync && \
   if [ -z ${ADGUARDHOMESYNC_RELEASE+x} ]; then \
-	  ADGUARDHOMESYNC_RELEASE=$(curl -sX GET "https://api.github.com/repos/bakito/adguardhome-sync/releases/latest" \
-	  | awk '/tag_name/{print $4;exit}' FS='[""]'); \
+    ADGUARDHOMESYNC_RELEASE=$(curl -sX GET "https://api.github.com/repos/bakito/adguardhome-sync/releases/latest" \
+    | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
   echo "*** Installing AdGuardHome Sync ***" && \
   curl -o \
-	  /tmp/adguardhomesync.tar.gz -L \
+    /tmp/adguardhomesync.tar.gz -L \
     "https://github.com/bakito/adguardhome-sync/releases/download/${ADGUARDHOMESYNC_RELEASE}/adguardhome-sync_${ADGUARDHOMESYNC_RELEASE#v}_linux_x86_64.tar.gz" && \
   tar xzf \
-	  /tmp/adguardhomesync.tar.gz -C \
-	  /app/adguardhome-sync/ && \
+    /tmp/adguardhomesync.tar.gz -C \
+    /app/adguardhome-sync/ && \
   echo "*** Cleaning Up ***" && \
   rm /tmp/adguardhomesync.tar.gz
 
@@ -33,6 +31,3 @@ COPY /root /
 EXPOSE 8080
 
 VOLUME /config
-
-ENV \
-  HOME=/config
