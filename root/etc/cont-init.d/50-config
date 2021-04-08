@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 if [ ! -f "/config/adguardhome-sync.yaml" ]; then
-	cp -a /defaults/adguardhome-sync.yaml /config/adguardhome-sync.yaml
+  cp -a /defaults/adguardhome-sync.yaml /config/adguardhome-sync.yaml
 fi
 
 chown -R abc:abc \
-	/config \
+  /config
