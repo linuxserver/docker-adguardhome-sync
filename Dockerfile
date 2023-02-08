@@ -1,4 +1,6 @@
-FROM ghcr.io/linuxserver/baseimage-alpine:3.16
+# syntax=docker/dockerfile:1
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.17
 
 ARG BUILD_DATE
 ARG VERSION
@@ -19,7 +21,7 @@ RUN \
   echo "*** Installing AdGuardHome Sync ***" && \
   curl -o \
     /tmp/adguardhomesync.tar.gz -L \
-    "https://github.com/bakito/adguardhome-sync/releases/download/${ADGUARDHOMESYNC_RELEASE}/adguardhome-sync_${ADGUARDHOMESYNC_RELEASE#v}_linux_x86_64.tar.gz" && \
+    "https://github.com/bakito/adguardhome-sync/releases/download/${ADGUARDHOMESYNC_RELEASE}/adguardhome-sync_${ADGUARDHOMESYNC_RELEASE#v}_linux_amd64.tar.gz" && \
   tar xzf \
     /tmp/adguardhomesync.tar.gz -C \
     /app/adguardhome-sync/ && \
