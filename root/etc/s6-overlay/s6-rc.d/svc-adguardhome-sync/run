@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
-if [ -z "$CONFIGFILE" ]; then
+if [[ -z "$CONFIGFILE" ]]; then
     exec \
         s6-setuidgid abc /app/adguardhome-sync/adguardhome-sync run --config /config/adguardhome-sync.yaml;
 else
