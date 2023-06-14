@@ -1,8 +1,9 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
-if [ ! -f "/config/adguardhome-sync.yaml" ]; then
+if [[ ! -f "/config/adguardhome-sync.yaml" ]]; then
     cp -a /defaults/adguardhome-sync.yaml /config/adguardhome-sync.yaml
 fi
 
-chown -R abc:abc \
+lsiown -R abc:abc \
     /config
