@@ -28,3 +28,5 @@ repo_vars:
   - CI_DOCKERENV='TZ=US/Pacific'
   - CI_AUTH='username:password'
   - CI_WEBPATH=''
+sponsor_links:
+  - { name: "AdGuardHome Sync", url: "https://github.com/sponsors/bakito" }
