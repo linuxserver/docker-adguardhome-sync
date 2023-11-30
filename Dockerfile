@@ -28,7 +28,7 @@ RUN \
   echo "*** Cleaning Up ***" && \
   rm /tmp/adguardhomesync.tar.gz
 
-COPY /root /
+COPY /root donate.txt /
 
 EXPOSE 8080
 
