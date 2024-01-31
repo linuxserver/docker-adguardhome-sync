@@ -23,17 +23,13 @@ development_versions_items:
 common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
 
-param_usage_include_env: true
-param_env_vars:
-  - { env_var: "TZ", env_value: "America/New_York", desc: "Specify a timezone to use EG America/New_York"}
-
 param_usage_include_ports: true
 param_ports:
   - { external_port: "8080", internal_port: "8080", port_desc: "Port for AdGuardHome Sync's web API." }
 
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
+  - { vol_path: "/config", vol_host_path: "/path/to/adguardhome-sync/config", desc: "Contains all relevant configuration files." }
 
 # optional parameters
 opt_param_usage_include_env: true
@@ -49,6 +45,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "31.01.24:", desc: "Rebase to Alpine 3.19." }
   - { date: "11.06.23:", desc: "Rebase to Alpine 3.18, deprecate armhf." }
   - { date: "07.02.23:", desc: "Rebase to Alpine 3.17, update amd64 artifact name." }
   - { date: "03.10.22:", desc: "Rebase to Alpine 3.16, migrate to s6v3." }
