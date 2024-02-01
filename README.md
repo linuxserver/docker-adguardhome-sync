@@ -87,7 +87,7 @@ services:
       - TZ=Etc/UTC
       - CONFIGFILE=/config/adguardhome-sync.yaml #optional
     volumes:
-      - /path/to/appdata/config:/config
+      - /path/to/adguardhome-sync/config:/config
     ports:
       - 8080:8080
     restart: unless-stopped
@@ -103,7 +103,7 @@ docker run -d \
   -e TZ=Etc/UTC \
   -e CONFIGFILE=/config/adguardhome-sync.yaml `#optional` \
   -p 8080:8080 \
-  -v /path/to/appdata/config:/config \
+  -v /path/to/adguardhome-sync/config:/config \
   --restart unless-stopped \
   lscr.io/linuxserver/adguardhome-sync:latest
 ```
@@ -282,6 +282,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **31.01.24:** - Rebase to Alpine 3.19.
 * **11.06.23:** - Rebase to Alpine 3.18, deprecate armhf.
 * **07.02.23:** - Rebase to Alpine 3.17, update amd64 artifact name.
 * **03.10.22:** - Rebase to Alpine 3.16, migrate to s6v3.
