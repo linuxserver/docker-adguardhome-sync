@@ -46,6 +46,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "24.05.24:", desc: "Rebase to Alpine 3.20." }
   - { date: "31.01.24:", desc: "Rebase to Alpine 3.19." }
   - { date: "11.06.23:", desc: "Rebase to Alpine 3.18, deprecate armhf." }
   - { date: "07.02.23:", desc: "Rebase to Alpine 3.17, update amd64 artifact name." }
