@@ -6,7 +6,6 @@ external_type: github_stable
 release_type: stable
 release_tag: latest
 ls_branch: main
-build_armhf: false
 repo_vars:
   - EXT_GIT_BRANCH = 'main'
   - EXT_USER = 'bakito'
@@ -24,8 +23,8 @@ repo_vars:
   - CI_WEB='true'
   - CI_PORT='8080'
   - CI_SSL='false'
-  - CI_DELAY='120'
-  - CI_DOCKERENV='TZ=US/Pacific'
+  - CI_DELAY='60'
+  - CI_DOCKERENV=''
   - CI_AUTH='username:password'
   - CI_WEBPATH=''
 sponsor_links:

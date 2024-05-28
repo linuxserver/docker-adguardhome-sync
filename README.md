@@ -282,6 +282,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **24.05.24:** - Rebase to Alpine 3.20.
 * **31.01.24:** - Rebase to Alpine 3.19.
 * **11.06.23:** - Rebase to Alpine 3.18, deprecate armhf.
 * **07.02.23:** - Rebase to Alpine 3.17, update amd64 artifact name.
