@@ -823,7 +823,7 @@ pipeline {
                     docker push ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG}
                     docker push ${MANIFESTIMAGE}:amd64-latest
                     echo "Pushing arm64 images"
-                    echo "$(docker images --digests ${MANIFESTIMAGE}:amd64-${META_TAG})"
+                    echo "$(docker images --digests ${MANIFESTIMAGE}:arm64v8-${META_TAG})"
                     docker push ${MANIFESTIMAGE}:arm64v8-${META_TAG}
                     docker push ${MANIFESTIMAGE}:arm64v8-latest
                     docker push ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
