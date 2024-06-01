@@ -713,7 +713,7 @@ pipeline {
                 set -e
                 docker pull ghcr.io/linuxserver/ci:latest
                 if [ "${MULTIARCH}" == "true" ]; then
-                  docker pull ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} --platform arm64
+                  docker pull ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} --platform=arm64
                   docker tag ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm64v8-${META_TAG}
                 fi
                 docker run --rm \
@@ -804,7 +804,7 @@ pipeline {
                   echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
                   echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
                   if [ "${CI}" == "false" ]; then
-                    docker pull ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}
+                    docker pull ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} --platform=arm64
                     docker tag ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm64v8-${META_TAG}
                   fi
                   for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
@@ -818,18 +818,22 @@ pipeline {
                       docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${SEMVER}
                       docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${SEMVER}
                     fi
+                    echo "Pushing amd64 images"
                     docker push ${MANIFESTIMAGE}:amd64-${META_TAG}
                     docker push ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG}
                     docker push ${MANIFESTIMAGE}:amd64-latest
+                    echo "Pushing arm64 images"
                     docker push ${MANIFESTIMAGE}:arm64v8-${META_TAG}
                     docker push ${MANIFESTIMAGE}:arm64v8-latest
                     docker push ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
                     if [ -n "${SEMVER}" ]; then
+                      echo "Pushing semver images"
                       docker push ${MANIFESTIMAGE}:amd64-${SEMVER}
                       docker push ${MANIFESTIMAGE}:arm64v8-${SEMVER}
                     fi
                   done
                   for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
+                    echo "Pushing manifests"
                     docker buildx imagetools create -t ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:amd64-latest ${MANIFESTIMAGE}:arm64v8-latest
                     docker buildx imagetools create -t ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
                     docker buildx imagetools create -t ${MANIFESTIMAGE}:${EXT_RELEASE_TAG} ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG} ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
