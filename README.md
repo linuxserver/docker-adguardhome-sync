@@ -57,14 +57,6 @@ The architectures supported by this image are:
 | arm64 | ✅ | arm64v8-\<version tag\> |
 | armhf | ❌ | |
 
-## Version Tags
-
-This image provides various versions that are available via tags. Please read the descriptions carefully and exercise caution when using unstable or development tags.
-
-| Tag | Available | Description |
-| :----: | :----: |--- |
-| latest | ✅ | Stable releases from GitHub |
-
 ## Application Setup
 
 Edit the adguardhome-sync.yaml with your AdGuardHome instance details, for more information check out [AdGuardHome Sync](https://github.com/bakito/adguardhome-sync/).
