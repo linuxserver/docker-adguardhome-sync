@@ -45,6 +45,7 @@ pipeline {
       steps{
         sh '''#!/bin/bash
               echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+              chmod 600 /config/.ssh/id_sign
               ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
               echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
               git config --global gpg.format ssh
@@ -541,6 +542,7 @@ pipeline {
         echo "Running on node: ${NODE_NAME}"
         sh '''#!/bin/bash
               echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+              chmod 600 /config/.ssh/id_sign
               ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
               echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
               git config --global gpg.format ssh
@@ -583,6 +585,7 @@ pipeline {
             echo "Running on node: ${NODE_NAME}"
             sh '''#!/bin/bash
                   echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+                  chmod 600 /config/.ssh/id_sign
                   ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
                   echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
                   git config --global gpg.format ssh
@@ -618,6 +621,7 @@ pipeline {
             echo "Running on node: ${NODE_NAME}"
             sh '''#!/bin/bash
                   echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+                  chmod 600 /config/.ssh/id_sign
                   ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
                   echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
                   git config --global gpg.format ssh
