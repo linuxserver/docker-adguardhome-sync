@@ -540,17 +540,6 @@ pipeline {
       }
       steps {
         echo "Running on node: ${NODE_NAME}"
-        sh '''#!/bin/bash
-              cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-              chmod 600 /config/.ssh/id_sign
-              ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-              echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-              git config --global gpg.format ssh
-              git config --global user.signingkey /config/.ssh/id_sign
-              git config --global commit.gpgsign true
-              git config --global user.name LinuxServer-CI
-              git config --global user.email ci@linuxserver.io
-        '''
         sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
         sh "docker buildx build \
           --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -583,17 +572,6 @@ pipeline {
         stage('Build X86') {
           steps {
             echo "Running on node: ${NODE_NAME}"
-            sh '''#!/bin/bash
-                  cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                  chmod 600 /config/.ssh/id_sign
-                  ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-                  echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-                  git config --global gpg.format ssh
-                  git config --global user.signingkey /config/.ssh/id_sign
-                  git config --global commit.gpgsign true
-                  git config --global user.name LinuxServer-CI
-                  git config --global user.email ci@linuxserver.io
-            '''
             sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
             sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -619,17 +597,6 @@ pipeline {
           }
           steps {
             echo "Running on node: ${NODE_NAME}"
-            sh '''#!/bin/bash
-                  cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                  chmod 600 /config/.ssh/id_sign
-                  ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-                  echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-                  git config --global gpg.format ssh
-                  git config --global user.signingkey /config/.ssh/id_sign
-                  git config --global commit.gpgsign true
-                  git config --global user.name LinuxServer-CI
-                  git config --global user.email ci@linuxserver.io
-            '''
             echo 'Logging into Github'
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
@@ -1044,6 +1011,13 @@ EOF
      ###################### */
   post {
     always {
+      sh '''#!/bin/bash
+            rm -rf /config/.ssh/id_sign
+            rm -rf /config/.ssh/id_sign.pub
+            git config --global --unset gpg.format
+            git config --global --unset user.signingkey
+            git config --global --unset commit.gpgsign
+        '''
       script{
         if (env.EXIT_STATUS == "ABORTED"){
           sh 'echo "build aborted"'
