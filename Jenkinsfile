@@ -18,6 +18,7 @@ pipeline {
     GITLAB_NAMESPACE=credentials('gitlab-namespace-id')
     DOCKERHUB_TOKEN=credentials('docker-hub-ci-pat')
     QUAYIO_API_TOKEN=credentials('quayio-repo-api-token')
+    GIT_SIGNING_KEY=credentials('484fbca6-9a4f-455e-b9e3-97ac98785f5f')
     EXT_GIT_BRANCH = 'main'
     EXT_USER = 'bakito'
     EXT_REPO = 'adguardhome-sync'
@@ -42,19 +43,17 @@ pipeline {
   stages {
     stage("Set git config"){
       steps{
-        withCredentials([sshUserPrivateKey(credentialsId: '484fbca6-9a4f-455e-b9e3-97ac98785f5f', keyFileVariable: 'GIT_SIGNING_KEY')]) {
-          sh '''#!/bin/bash
-                echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                chmod 600 /config/.ssh/id_sign
-                ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-                echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-                git config --global gpg.format ssh
-                git config --global user.signingkey /config/.ssh/id_sign
-                git config --global commit.gpgsign true
-                git config --global user.name LinuxServer-CI
-                git config --global user.email ci@linuxserver.io
-          '''
-        }
+        sh '''#!/bin/bash
+              cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+              chmod 600 /config/.ssh/id_sign
+              ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
+              echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+              git config --global gpg.format ssh
+              git config --global user.signingkey /config/.ssh/id_sign
+              git config --global commit.gpgsign true
+              git config --global user.name LinuxServer-CI
+              git config --global user.email ci@linuxserver.io
+        '''
       }
     }
     // Setup all the basic environment variables needed for the build
@@ -541,19 +540,17 @@ pipeline {
       }
       steps {
         echo "Running on node: ${NODE_NAME}"
-        withCredentials([sshUserPrivateKey(credentialsId: '484fbca6-9a4f-455e-b9e3-97ac98785f5f', keyFileVariable: 'GIT_SIGNING_KEY')]) {
-          sh '''#!/bin/bash
-                echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                chmod 600 /config/.ssh/id_sign
-                ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-                echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-                git config --global gpg.format ssh
-                git config --global user.signingkey /config/.ssh/id_sign
-                git config --global commit.gpgsign true
-                git config --global user.name LinuxServer-CI
-                git config --global user.email ci@linuxserver.io
-          '''
-        }
+        sh '''#!/bin/bash
+              cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+              chmod 600 /config/.ssh/id_sign
+              ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
+              echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+              git config --global gpg.format ssh
+              git config --global user.signingkey /config/.ssh/id_sign
+              git config --global commit.gpgsign true
+              git config --global user.name LinuxServer-CI
+              git config --global user.email ci@linuxserver.io
+        '''
         sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
         sh "docker buildx build \
           --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -586,19 +583,17 @@ pipeline {
         stage('Build X86') {
           steps {
             echo "Running on node: ${NODE_NAME}"
-            withCredentials([sshUserPrivateKey(credentialsId: '484fbca6-9a4f-455e-b9e3-97ac98785f5f', keyFileVariable: 'GIT_SIGNING_KEY')]) {
-              sh '''#!/bin/bash
-                    echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                    chmod 600 /config/.ssh/id_sign
-                    ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-                    echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-                    git config --global gpg.format ssh
-                    git config --global user.signingkey /config/.ssh/id_sign
-                    git config --global commit.gpgsign true
-                    git config --global user.name LinuxServer-CI
-                    git config --global user.email ci@linuxserver.io
-              '''
-            }
+            sh '''#!/bin/bash
+                  cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+                  chmod 600 /config/.ssh/id_sign
+                  ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
+                  echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+                  git config --global gpg.format ssh
+                  git config --global user.signingkey /config/.ssh/id_sign
+                  git config --global commit.gpgsign true
+                  git config --global user.name LinuxServer-CI
+                  git config --global user.email ci@linuxserver.io
+            '''
             sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
             sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -624,19 +619,17 @@ pipeline {
           }
           steps {
             echo "Running on node: ${NODE_NAME}"
-            withCredentials([sshUserPrivateKey(credentialsId: '484fbca6-9a4f-455e-b9e3-97ac98785f5f', keyFileVariable: 'GIT_SIGNING_KEY')]) {
-              sh '''#!/bin/bash
-                    echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                    chmod 600 /config/.ssh/id_sign
-                    ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
-                    echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
-                    git config --global gpg.format ssh
-                    git config --global user.signingkey /config/.ssh/id_sign
-                    git config --global commit.gpgsign true
-                    git config --global user.name LinuxServer-CI
-                    git config --global user.email ci@linuxserver.io
-              '''
-            }
+            sh '''#!/bin/bash
+                  cat ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+                  chmod 600 /config/.ssh/id_sign
+                  ssh-keygen -y -f /config/.ssh/id_sign > /config/.ssh/id_sign.pub
+                  echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+                  git config --global gpg.format ssh
+                  git config --global user.signingkey /config/.ssh/id_sign
+                  git config --global commit.gpgsign true
+                  git config --global user.name LinuxServer-CI
+                  git config --global user.email ci@linuxserver.io
+            '''
             echo 'Logging into Github'
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
