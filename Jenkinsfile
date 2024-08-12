@@ -32,7 +32,7 @@ pipeline {
     DIST_IMAGE = 'alpine'
     MULTIARCH='true'
     CI='true'
-    CI_WEB='true'
+    CI_WEB='false'
     CI_PORT='8080'
     CI_SSL='false'
     CI_DELAY='60'
@@ -44,13 +44,14 @@ pipeline {
     stage("Set git config"){
       steps{
         sh '''#!/bin/bash
-                echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
-                git config --global gpg.format ssh
-                git config --global user.signingkey /config/.ssh/id_sign
-                git config --global commit.gpgsign true
-                git config --global user.name LinuxServer-CI
-                git config --global user.email ci@linuxserver.io
-          '''
+              echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+              echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+              git config --global gpg.format ssh
+              git config --global user.signingkey /config/.ssh/id_sign
+              git config --global commit.gpgsign true
+              git config --global user.name LinuxServer-CI
+              git config --global user.email ci@linuxserver.io
+        '''
       }
     }
     // Setup all the basic environment variables needed for the build
@@ -537,6 +538,15 @@ pipeline {
       }
       steps {
         echo "Running on node: ${NODE_NAME}"
+        sh '''#!/bin/bash
+              echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+              echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+              git config --global gpg.format ssh
+              git config --global user.signingkey /config/.ssh/id_sign
+              git config --global commit.gpgsign true
+              git config --global user.name LinuxServer-CI
+              git config --global user.email ci@linuxserver.io
+        '''
         sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
         sh "docker buildx build \
           --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -569,6 +579,15 @@ pipeline {
         stage('Build X86') {
           steps {
             echo "Running on node: ${NODE_NAME}"
+            sh '''#!/bin/bash
+                  echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+                  echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+                  git config --global gpg.format ssh
+                  git config --global user.signingkey /config/.ssh/id_sign
+                  git config --global commit.gpgsign true
+                  git config --global user.name LinuxServer-CI
+                  git config --global user.email ci@linuxserver.io
+            '''
             sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile"
             sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -594,6 +613,15 @@ pipeline {
           }
           steps {
             echo "Running on node: ${NODE_NAME}"
+            sh '''#!/bin/bash
+                  echo ${GIT_SIGNING_KEY} > /config/.ssh/id_sign
+                  echo "Using $(ssh-keygen -lf /config/.ssh/id_sign) to sign commits"
+                  git config --global gpg.format ssh
+                  git config --global user.signingkey /config/.ssh/id_sign
+                  git config --global commit.gpgsign true
+                  git config --global user.name LinuxServer-CI
+                  git config --global user.email ci@linuxserver.io
+            '''
             echo 'Logging into Github'
             sh '''#! /bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
