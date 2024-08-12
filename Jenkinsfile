@@ -51,7 +51,6 @@ pipeline {
                 git config --global user.name LinuxServer-CI
                 git config --global user.email ci@linuxserver.io
           '''
-        }
       }
     }
     // Setup all the basic environment variables needed for the build
