@@ -69,6 +69,7 @@ This image provides various versions that are available via tags. Please read th
 
 Edit the adguardhome-sync.yaml with your AdGuardHome instance details, for more information check out [AdGuardHome Sync](https://github.com/bakito/adguardhome-sync/).
 
+ 
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
@@ -257,7 +258,8 @@ Below are the instructions for updating containers:
 
 ### Image Update Notifications - Diun (Docker Image Update Notifier)
 
-**tip**: We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
+>[!TIP]
+>We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
 
 ## Building locally
 
@@ -272,10 +274,10 @@ docker build \
   -t lscr.io/linuxserver/adguardhome-sync:latest .
 ```
 
-The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
+The ARM variants can be built on x86_64 hardware and vice versa using `lscr.io/linuxserver/qemu-static`
 
 ```bash
-docker run --rm --privileged multiarch/qemu-user-static:register --reset
+docker run --rm --privileged lscr.io/linuxserver/qemu-static --reset
 ```
 
 Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64`.
