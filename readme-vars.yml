@@ -39,6 +39,9 @@ app_setup_block_enabled: true
 app_setup_block: |
   Edit the adguardhome-sync.yaml with your AdGuardHome instance details, for more information check out [AdGuardHome Sync](https://github.com/bakito/adguardhome-sync/).
 
+# init diagram
+init_diagram:
+
 # changelog
 changelogs:
   - { date: "24.05.24:", desc: "Rebase to Alpine 3.20." }
