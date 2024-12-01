@@ -6,46 +6,80 @@ project_url: "https://github.com/bakito/adguardhome-sync/"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/adguardhomesync-icon.png"
 project_blurb: |
   [{{ project_name|capitalize }}]({{ project_url }}) is a tool to synchronize AdGuardHome config to replica instances.
-
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 project_categories: "Network"
-
 # supported architectures
 available_architectures:
-  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
-  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
-
+  - {arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - {arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
 # container parameters
 common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
-
 param_usage_include_ports: true
 param_ports:
-  - { external_port: "8080", internal_port: "8080", port_desc: "Port for AdGuardHome Sync's web API." }
-
+  - {external_port: "8080", internal_port: "8080", port_desc: "Port for AdGuardHome Sync's web API."}
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Contains all relevant configuration files." }
-
+  - {vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Contains all relevant configuration files."}
 # optional parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "CONFIGFILE", env_value: "/config/adguardhome-sync.yaml", desc: "Set a custom config file."}
-
+  - {env_var: "CONFIGFILE", env_value: "/config/adguardhome-sync.yaml", desc: "Set a custom config file."}
 readonly_supported: true
-
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
   Edit the adguardhome-sync.yaml with your AdGuardHome instance details, for more information check out [AdGuardHome Sync](https://github.com/bakito/adguardhome-sync/).
-
+# init diagram
+init_diagram: |
+  "adguardhome-sync:latest": {
+    docker-mods
+    base {
+      fix-attr +\nlegacy cont-init
+    }
+    docker-mods -> base
+    legacy-services
+    custom services
+    init-services -> legacy-services
+    init-services -> custom services
+    custom services -> legacy-services
+    legacy-services -> ci-service-check
+    init-migrations -> init-adduser
+    init-config -> init-adguardhome-sync-config
+    init-os-end -> init-config
+    init-adguardhome-sync-config -> init-config-end
+    init-config -> init-config-end
+    init-os-end -> init-crontab-config
+    init-mods-end -> init-custom-files
+    base -> init-envfile
+    base -> init-migrations
+    base -> init-mods
+    init-config-end -> init-mods
+    init-mods -> init-mods-end
+    init-mods-package-install -> init-mods-end
+    init-mods -> init-mods-package-install
+    base -> init-os-end
+    init-adduser -> init-os-end
+    init-envfile -> init-os-end
+    init-migrations -> init-os-end
+    init-custom-files -> init-services
+    init-mods-end -> init-services
+    init-services -> svc-adguardhome-sync
+    svc-adguardhome-sync -> legacy-services
+    init-services -> svc-cron
+    svc-cron -> legacy-services
+  }
+  Base Images: {
+    "baseimage-alpine:3.20"
+  }
+  "adguardhome-sync:latest" <- Base Images
 # changelog
 changelogs:
-  - { date: "24.05.24:", desc: "Rebase to Alpine 3.20." }
-  - { date: "31.01.24:", desc: "Rebase to Alpine 3.19." }
-  - { date: "11.06.23:", desc: "Rebase to Alpine 3.18, deprecate armhf." }
-  - { date: "07.02.23:", desc: "Rebase to Alpine 3.17, update amd64 artifact name." }
-  - { date: "03.10.22:", desc: "Rebase to Alpine 3.16, migrate to s6v3." }
-  - { date: "18.12.21:", desc: "Rebase to Alpine 3.15." }
-  - { date: "09.08.21:", desc: "Rebase to Alpine 3.14." }
-  - { date: "08.04.21:", desc: "Initial Release." }
+  - {date: "24.05.24:", desc: "Rebase to Alpine 3.20."}
+  - {date: "31.01.24:", desc: "Rebase to Alpine 3.19."}
+  - {date: "11.06.23:", desc: "Rebase to Alpine 3.18, deprecate armhf."}
+  - {date: "07.02.23:", desc: "Rebase to Alpine 3.17, update amd64 artifact name."}
+  - {date: "03.10.22:", desc: "Rebase to Alpine 3.16, migrate to s6v3."}
+  - {date: "18.12.21:", desc: "Rebase to Alpine 3.15."}
+  - {date: "09.08.21:", desc: "Rebase to Alpine 3.14."}
+  - {date: "08.04.21:", desc: "Initial Release."}
