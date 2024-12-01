@@ -7,6 +7,7 @@ release_type: stable
 release_tag: latest
 ls_branch: main
 image_sbom: true
+image_provenance: true
 repo_vars:
   - EXT_GIT_BRANCH = 'main'
   - EXT_USER = 'bakito'

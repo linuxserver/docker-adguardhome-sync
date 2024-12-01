@@ -69,10 +69,12 @@ This image provides various versions that are available via tags. Please read th
 
 Edit the adguardhome-sync.yaml with your AdGuardHome instance details, for more information check out [AdGuardHome Sync](https://github.com/bakito/adguardhome-sync/).
 
- 
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+
+>[!NOTE]
+>Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
@@ -115,7 +117,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-p 8080` | Port for AdGuardHome Sync's web API. |
+| `-p 8080:8080` | Port for AdGuardHome Sync's web API. |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
