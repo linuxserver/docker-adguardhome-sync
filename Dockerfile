@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.20
+FROM ghcr.io/linuxserver/baseimage-alpine:3.21
 
 ARG BUILD_DATE
 ARG VERSION
@@ -12,6 +12,8 @@ ENV \
   HOME=/config
 
 RUN \
+  apk add --no-cache \
+    yq-go && \
   mkdir -p /app/adguardhome-sync && \
   if [ -z ${ADGUARDHOMESYNC_RELEASE+x} ]; then \
     ADGUARDHOMESYNC_RELEASE=$(curl -sX GET "https://api.github.com/repos/bakito/adguardhome-sync/releases/latest" \
