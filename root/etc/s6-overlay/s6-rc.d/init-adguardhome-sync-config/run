@@ -5,5 +5,7 @@ if [[ ! -f "/config/adguardhome-sync.yaml" ]]; then
     cp -a /defaults/adguardhome-sync.yaml /config/adguardhome-sync.yaml
 fi
 
-lsiown -R abc:abc \
-    /config
+if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+    lsiown -R abc:abc \
+        /config
+fi

@@ -26,6 +26,7 @@ opt_param_usage_include_env: true
 opt_param_env_vars:
   - {env_var: "CONFIGFILE", env_value: "/config/adguardhome-sync.yaml", desc: "Set a custom config file."}
 readonly_supported: true
+nonroot_supported: true
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -75,6 +76,7 @@ init_diagram: |
   "adguardhome-sync:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "17.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "24.05.24:", desc: "Rebase to Alpine 3.20."}
   - {date: "31.01.24:", desc: "Rebase to Alpine 3.19."}
   - {date: "11.06.23:", desc: "Rebase to Alpine 3.18, deprecate armhf."}
