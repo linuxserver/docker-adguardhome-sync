@@ -7,6 +7,7 @@ project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/ma
 project_blurb: |
   [{{ project_name|capitalize }}]({{ project_url }}) is a tool to synchronize AdGuardHome config to replica instances.
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+project_categories: "Network,DNS"
 project_categories: "Network"
 # supported architectures
 available_architectures:
