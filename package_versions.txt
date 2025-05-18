@@ -30,7 +30,7 @@ github.com/jinzhu/copier             v0.4.0                              go-modu
 github.com/magiconair/properties     v1.8.7                              go-module    
 github.com/mattn/go-colorable        v0.1.13                             go-module    
 github.com/mattn/go-isatty           v0.0.20                             go-module    
-github.com/mikefarah/yq/v4           (devel)                             go-module    
+github.com/mikefarah/yq/v4           UNKNOWN                             go-module    
 github.com/pelletier/go-toml/v2      v2.2.3                              go-module    
 github.com/spf13/cobra               v1.8.1                              go-module    
 github.com/spf13/pflag               v1.0.5                              go-module    
