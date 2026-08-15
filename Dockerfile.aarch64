@@ -17,7 +17,7 @@ RUN \
   mkdir -p /app/adguardhome-sync && \
   if [ -z ${ADGUARDHOMESYNC_RELEASE+x} ]; then \
     ADGUARDHOMESYNC_RELEASE=$(curl -sX GET "https://api.github.com/repos/bakito/adguardhome-sync/releases/latest" \
-    | awk '/tag_name/{print $4;exit}' FS='[""]'); \
+    | jq -r '.tag_name'); \
   fi && \
   echo "*** Installing AdGuardHome Sync ***" && \
   curl -o \
